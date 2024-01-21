@@ -1,23 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import LandingPage from "./Components/LandingPage/LandingPage";
+import axios from "axios";
+import React, { createContext, useEffect, useState } from "react";
+
+export const employeeContext = createContext();
 
 function App() {
+  const [employeeData, setEmployeeData] = useState([]);
+
+  const [employeeToBeEdited, setEmployeeToBeEdited] = useState([]);
+
+  const [addEmployee, setAddEmployee] = useState({
+    firstName: "",
+    lastName: "",
+    image: "",
+    email: "",
+    phone: "",
+    age: "",
+    address: "",
+    birthDate: "",
+  });
+
+  const [displayEmployeeData, setDisplayEmployeeData] = useState([]);
+
+  const fetchData = async () => {
+    let response = await axios.get("https://dummyjson.com/users");
+    setEmployeeData(response.data.users);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <employeeContext.Provider
+        value={{
+          employeeData,
+          setEmployeeData,
+          addEmployee,
+          setAddEmployee,
+          displayEmployeeData,
+          setDisplayEmployeeData,
+          employeeToBeEdited,
+          setEmployeeToBeEdited,
+        }}
+      >
+        <LandingPage />
+      </employeeContext.Provider>
     </div>
   );
 }

@@ -1,0 +1,25 @@
+.landingPage-body {
+  display: grid;
+  grid-template-columns: 400px auto 1fr;
+  padding: 0px;
+  gap: 20px;
+  border: 1px solid black;
+  margin: 20px;
+}
+.horizontal-line {
+  width: 2px;
+  background-color: black;
+}
+@media (max-width: 720px) {
+  .landingPage-body {
+    display:flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .horizontal-line{
+    width:100%;
+    height:1px;
+    background-color: black;
+  }
+}
